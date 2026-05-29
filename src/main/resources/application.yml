@@ -1,0 +1,19 @@
+spring:
+  docker:
+    compose:
+      enabled: false
+  application:
+    name: global-live-class-booking-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/live-class-booking
+    username: anant-saini
+    password: HarryPotter@123
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+kind: Application
