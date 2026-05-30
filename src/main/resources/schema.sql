@@ -32,9 +32,11 @@ CREATE TABLE IF NOT EXISTS offerings (
 CREATE TABLE IF NOT EXISTS sessions (
                           id BIGSERIAL PRIMARY KEY,
                           offering_id BIGINT NOT NULL,
+                          teacher_id BIGINT NOT NULL,
                           start_time TIMESTAMP WITH TIME ZONE NOT NULL,
                           end_time TIMESTAMP WITH TIME ZONE NOT NULL,
-                          CONSTRAINT fk_offering_session FOREIGN KEY (offering_id) REFERENCES offerings(id) ON DELETE CASCADE
+                          CONSTRAINT fk_offering_session FOREIGN KEY (offering_id) REFERENCES offerings(id) ON DELETE CASCADE,
+                          CONSTRAINT fk_teacher_session FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE
     );
 
 -- 5. Bookings Table
