@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/live-class-booking
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 12345
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: live-class-booking
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - db-data:/var/lib/postgresql # Updated mount point for Postgres 18
+      - ./src/main/resources/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./src/main/resources/02_data.sql:/docker-entrypoint-initdb.d/02_data.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge
