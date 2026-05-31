@@ -3,6 +3,8 @@ package com.undoschool.platform.globalliveclassbookingservice.controller;
 import com.undoschool.platform.globalliveclassbookingservice.dto.requestDTOs.BookingRequestDTO;
 import com.undoschool.platform.globalliveclassbookingservice.dto.responseDTOs.BookingResponseDTO;
 import com.undoschool.platform.globalliveclassbookingservice.service.BookingService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ public class BookingController {
      * Atomic Booking with Conflict Detection and Concurrency Handling.
      * The parent books the entire offering via the body, and their identity is verified via header.
      */
+    @Operation(summary = "Book an offering", description = "Books all sessions for an offering. Returns 409 if any session overlaps with existing bookings.")
+    @ApiResponse(responseCode = "409", description = "Time conflict detected")
     @PostMapping("/bookings")
     public ResponseEntity<BookingResponseDTO> bookOffering(
             @RequestHeader(name = "X-Parent-Id") Long parentId,

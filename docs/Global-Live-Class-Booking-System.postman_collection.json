@@ -1,0 +1,475 @@
+{
+  "info": {
+    "_postman_id": "bd117a33-59a5-4e0d-a8e1-7212a06edf77",
+    "name": "Global-Live-Class-Booking-System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28576416"
+  },
+  "item": [
+    {
+      "name": "/api/v1/users",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Thomas Christian\",\n  \"role\": \"TEACHER\",\n  \"timezoneId\": \"Africa/Johannesburg\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/users/{id}",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n        \"name\": \"Takaichi Sanakyo\",\n        \"role\": \"PARENT\",\n        \"timezoneId\": \"Asia/Tokyo\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/5",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/courses",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/courses",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "courses"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/courses",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Data Science Fundamentals: From Zero to Hero\",\n  \"description\": \"An intensive course on data analysis and visualization. Master Python libraries including Pandas for data manipulation, Matplotlib for plotting, and Scikit-Learn for implementing basic machine learning models like linear regression and classification.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/courses",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "courses"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/courses/{id}",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Python 3: Masterclass\",\n  \"description\": \"Updated syllabus: Now includes FastAPI and Data Science basics with NumPy.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/courses/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "courses",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/offerings",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Teacher-Id",
+            "value": "6",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"courseId\": 4,\n  \"name\": \"4 Day Data Science Camp: Become a Data Star!\",\n  \"price\": 20.10,\n  \"currency\": \"USD\",\n  \"totalSeats\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/offerings",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "offerings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/offerings/teacher/{teacherId}",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/offerings/teacher/8",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "offerings",
+            "teacher",
+            "8"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/offerings/{offeringId}/sessions",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Teacher-Id",
+            "value": "6",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n  {\n    \"startTime\": \"2026-07-20T10:00:00-04:00\",\n    \"endTime\": \"2026-07-20T11:30:00-04:00\"\n  },\n  {\n    \"startTime\": \"2026-07-21T10:00:00-04:00\",\n    \"endTime\": \"2026-07-21T11:00:00-04:00\"\n  },\n  {\n    \"startTime\": \"2026-07-22T10:00:00-04:00\",\n    \"endTime\": \"2026-07-22T11:30:00-04:00\"\n  },\n  {\n    \"startTime\": \"2026-07-23T10:00:00-04:00\",\n    \"endTime\": \"2026-07-23T11:00:00-04:00\"\n  }\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/offerings/6/sessions",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "offerings",
+            "6",
+            "sessions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/offerings/{offeringId}",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Time-Zone",
+            "value": "America/New_York",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/offerings/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "offerings",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/offerings/upcoming",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Teacher-Id",
+            "value": "7",
+            "type": "text"
+          },
+          {
+            "key": "X-Time-Zone",
+            "value": "America/New_York",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/offerings/upcoming",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "offerings",
+            "upcoming"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/parent/offerings/available",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Time-Zone",
+            "value": "Europe/London",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/parent/offerings/available",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "parent",
+            "offerings",
+            "available"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/bookings",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const baseUrl = pm.globals.get(\"base_url\") || pm.environment.get(\"base_url\") || pm.collectionVariables.get(\"base_url\");",
+              "",
+              "const requestBody = JSON.stringify({ offeringId: 6 });",
+              "",
+              "const requestOne = {",
+              "    url: baseUrl + \"/api/v1/bookings\",",
+              "    method: \"POST\",",
+              "    header: {",
+              "        \"Content-Type\": \"application/json\",",
+              "        \"X-Parent-Id\": \"3\"",
+              "    },",
+              "    body: {",
+              "        mode: \"raw\",",
+              "        raw: requestBody",
+              "    }",
+              "};",
+              "",
+              "const requestTwo = {",
+              "    url: baseUrl + \"/api/v1/bookings\",",
+              "    method: \"POST\",",
+              "    header: {",
+              "        \"Content-Type\": \"application/json\",",
+              "        \"X-Parent-Id\": \"5\"",
+              "    },",
+              "    body: {",
+              "        mode: \"raw\",",
+              "        raw: requestBody",
+              "    }",
+              "};",
+              "",
+              "pm.sendRequest(requestOne, function (err, res) {",
+              "    if (err) {",
+              "        console.error(\"Request with X-Parent-Id: 3 failed:\", err);",
+              "    } else {",
+              "        console.log(\"Response for X-Parent-Id: 3 →\", res.status, res.json());",
+              "    }",
+              "});",
+              "",
+              "pm.sendRequest(requestTwo, function (err, res) {",
+              "    if (err) {",
+              "        console.error(\"Request with X-Parent-Id: 5 failed:\", err);",
+              "    } else {",
+              "        console.log(\"Response for X-Parent-Id: 5 →\", res.status, res.json());",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Parent-Id",
+            "value": "5",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"offeringId\": 6}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/bookings",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "bookings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/v1/bookings",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}

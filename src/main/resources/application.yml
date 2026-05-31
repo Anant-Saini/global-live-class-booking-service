@@ -1,8 +1,9 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: global-live-class-booking-service
-  server:
-    port: 8080
   datasource:
     url: jdbc:postgresql://localhost:5432/live-class-booking
     username: anant-saini
@@ -14,7 +15,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  Jackson:
+  jackson:
     serialization:
       write-dates-as-timestamps: false
     deserialization:
@@ -24,5 +25,11 @@ spring:
   docker:
     compose:
       enabled: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
 
 kind: Application
