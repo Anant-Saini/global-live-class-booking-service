@@ -1,9 +1,8 @@
 spring:
-  docker:
-    compose:
-      enabled: false
   application:
     name: global-live-class-booking-service
+  server:
+    port: 8080
   datasource:
     url: jdbc:postgresql://localhost:5432/live-class-booking
     username: anant-saini
@@ -15,5 +14,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  Jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      # If FALSE: Preserves the zone provided by the user
+      # If TRUE: Converts everything to the server's timezone
+      adjust-dates-to-context-time-zone: false
+  docker:
+    compose:
+      enabled: false
 
 kind: Application

@@ -1,4 +1,4 @@
-package entity;
+package com.undoschool.platform.globalliveclassbookingservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
