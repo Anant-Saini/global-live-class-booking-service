@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.List;
 
 @Repository
@@ -26,4 +27,15 @@ public interface OfferingRepository extends JpaRepository<Offering, Long> {
             "GROUP BY o.id " +
             "ORDER BY MIN(s.startTime) ASC")
     List<Offering> findUpcomingByTeacher(@Param("teacherId") Long teacherId, @Param("now") ZonedDateTime now);
+
+    @Query("SELECT o FROM Offering o " +
+            "JOIN Session s ON s.offering = o " +
+            "WHERE o.bookedSeats < o.totalSeats " +
+            "GROUP BY o.id " +
+            "HAVING MIN(s.startTime) > :now " +
+            "ORDER BY MIN(s.startTime) ASC")
+    List<Offering> findAvailableOfferings(@Param("now") ZonedDateTime now);
+
+    @Query("SELECT o FROM Offering o JOIN FETCH o.course JOIN FETCH o.teacher WHERE o.id = :id")
+    Optional<Offering> findByIdWithDetails(@Param("id") Long id);
 }

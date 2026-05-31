@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.ZoneId;
 import java.util.Map;
 import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,39 +71,23 @@ public class OfferingService {
     }
 
     @Transactional(readOnly = true)
-    public OfferingWithSessionsResponseDTO getOfferingWithSessions(Long offeringId, String zoneStr) {
+    public OfferingWithSessionsResponseDTO getOfferingWithSessions(Long offeringId, ZoneId targetZone) {
         // 1. Fail Fast: Check if the offering exists
         Offering offering = offeringRepository.findById(offeringId)
                 .orElseThrow(() -> new ResourceNotFoundException("Offering not found with id: " + offeringId));
-        // 2. Get TimeZone
-        ZoneId targetZone = null;
-        try {
-            targetZone = ZoneId.of(zoneStr);
-            
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid Timezone ID Header");
-        }
-        // 3. Map to DTO
+
+        // 2. Map to DTO using the pre-validated targetZone
         List<Session> sessions = sessionRepository.findByOfferingId(offeringId);
-        ZoneId finalTargetZone = targetZone;
         List<SessionResponseDTO> sessionDTOs = sessions.stream()
-                .map(s -> mapToSessionResponseDTO(s, finalTargetZone))
+                .map(s -> mapToSessionResponseDTO(s, targetZone))
                 .collect(Collectors.toList());
 
         return mapToOfferingWithSessionsDTO(offering, sessionDTOs);
     }
 
     @Transactional(readOnly = true)
-    public List<OfferingWithSessionsResponseDTO> getUpcomingOfferingsForTeacher(Long teacherId, String zoneStr) {
-        ZoneId targetZone = null;
-        
-        try {
-            targetZone = ZoneId.of(zoneStr);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid Timezone ID Header");
-        }
-        
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+    public List<OfferingWithSessionsResponseDTO> getUpcomingOfferingsForTeacher(Long teacherId, ZoneId targetZone) {
+        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
 
         List<Offering> offerings = offeringRepository.findUpcomingByTeacher(teacherId, now);
         List<Long> offeringIds = offerings.stream().map(Offering::getId).collect(Collectors.toList());
@@ -114,12 +99,33 @@ public class OfferingService {
         Map<Long, List<Session>> sessionsByOffering = allSessions.stream()
                 .collect(Collectors.groupingBy(s -> s.getOffering().getId()));
 
-        ZoneId finalTargetZone = targetZone;
         return offerings.stream()
                 .map(o -> {
                     List<Session> sessions = sessionsByOffering.getOrDefault(o.getId(), List.of());
                     List<SessionResponseDTO> sessionDTOs = sessions.stream()
-                            .map(s -> mapToSessionResponseDTO(s, finalTargetZone))
+                            .map(s -> mapToSessionResponseDTO(s, targetZone))
+                            .collect(Collectors.toList());
+                    return mapToOfferingWithSessionsDTO(o, sessionDTOs);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<OfferingWithSessionsResponseDTO> getAvailableOfferings(ZoneId targetZone) {
+        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+
+        List<Offering> offerings = offeringRepository.findAvailableOfferings(now);
+        List<Long> offeringIds = offerings.stream().map(Offering::getId).collect(Collectors.toList());
+
+        List<Session> allSessions = sessionRepository.findByOfferingIdIn(offeringIds);
+        Map<Long, List<Session>> sessionsByOffering = allSessions.stream()
+                .collect(Collectors.groupingBy(s -> s.getOffering().getId()));
+
+        return offerings.stream()
+                .map(o -> {
+                    List<Session> sessions = sessionsByOffering.getOrDefault(o.getId(), List.of());
+                    List<SessionResponseDTO> sessionDTOs = sessions.stream()
+                            .map(s -> mapToSessionResponseDTO(s, targetZone))
                             .collect(Collectors.toList());
                     return mapToOfferingWithSessionsDTO(o, sessionDTOs);
                 })

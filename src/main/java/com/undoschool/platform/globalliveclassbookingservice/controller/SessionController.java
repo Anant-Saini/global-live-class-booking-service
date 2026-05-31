@@ -27,7 +27,7 @@ public class SessionController {
     @PostMapping("/offerings/{offeringId}/sessions")
     public ResponseEntity<List<SessionResponseDTO>> addSessions(
             @PathVariable Long offeringId,
-            @RequestHeader("X-Teacher-Id") Long teacherId,
+            @RequestHeader(name = "X-Teacher-Id") Long teacherId,
             @RequestBody @Valid List<SessionRequestDTO> sessionRequests) {
         
         List<SessionResponseDTO> sessions = sessionService.addSessionsToOffering(offeringId, teacherId, sessionRequests);

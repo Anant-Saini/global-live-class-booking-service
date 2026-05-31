@@ -12,22 +12,22 @@ import com.undoschool.platform.globalliveclassbookingservice.service.CourseServi
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/courses")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
 
-    @PostMapping
+    @PostMapping("/courses")
     public ResponseEntity<Course> createCourse(@Valid @RequestBody CourseRequestDTO dto) {
         return new ResponseEntity<>(courseService.createCourse(dto), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/courses/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseRequestDTO dto) {
         return ResponseEntity.ok(courseService.updateCourse(id, dto));
     }
 
-    @GetMapping
+    @GetMapping("/courses")
     public ResponseEntity<List<Course>> getCourses() {
         return ResponseEntity.ok(courseService.getAllCourses());
     }

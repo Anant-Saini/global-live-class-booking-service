@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class OfferingController {
 
     @PostMapping("/offerings")
     public ResponseEntity<OfferingResponseDTO> createOffering(
-            @RequestHeader("X-Teacher-Id") Long teacherId,
+            @RequestHeader(name = "X-Teacher-Id") Long teacherId,
             @Valid @RequestBody OfferingRequestDTO dto) {
         return new ResponseEntity<>(offeringService.createOffering(teacherId, dto), HttpStatus.CREATED);
     }
@@ -34,14 +35,14 @@ public class OfferingController {
     @GetMapping("/offerings/{id}")
     public ResponseEntity<OfferingWithSessionsResponseDTO> getOfferingById(
             @PathVariable("id") Long offeringId,
-            @RequestHeader(value = "X-Time-Zone", defaultValue = "UTC") String zoneId) {
+            @RequestHeader(value = "X-Time-Zone", defaultValue = "UTC") ZoneId zoneId) {
         return ResponseEntity.ok(offeringService.getOfferingWithSessions(offeringId, zoneId));
     }
 
     @GetMapping("/offerings/upcoming")
     public ResponseEntity<List<OfferingWithSessionsResponseDTO>> getUpcomingOfferings(
-            @RequestHeader("X-Teacher-Id") Long teacherId,
-            @RequestHeader(value = "X-Time-Zone", defaultValue = "UTC") String zoneId) {
+            @RequestHeader(name = "X-Teacher-Id") Long teacherId,
+            @RequestHeader(value = "X-Time-Zone", defaultValue = "UTC") ZoneId zoneId) {
         return ResponseEntity.ok(offeringService.getUpcomingOfferingsForTeacher(teacherId, zoneId));
     }
 }
